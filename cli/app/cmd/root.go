@@ -13,6 +13,9 @@ var (
 		Long: `Hscli is a terminal tool for manager your home service with systemd and podman.
 For help type hscli -h or help
 `,
+		Run: func(cmd *cobra.Command, args []string) {
+
+		},
 	}
 )
 
