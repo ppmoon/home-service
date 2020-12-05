@@ -1,6 +1,6 @@
 package main
 
-import "hscli/app/cmd"
+import "github.com/ppmoon/home-service/cli/app/cmd"
 
 func main() {
 	cmd.Execute()
