@@ -9,9 +9,10 @@ func NewSoftwareManager() *SoftwareManager {
 
 // Download container image.
 // Podman pull image
-func (s *SoftwareManager) DownloadImage()  {
+func (s *SoftwareManager) DownloadImage() {
 
 }
+
 // Get software config repo cache
 // install software
 // remove software

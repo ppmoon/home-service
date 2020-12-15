@@ -3,12 +3,15 @@ package client
 import (
 	"bufio"
 	"context"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"github.com/ppmoon/home-service/log"
 	"io"
 	"net"
 	"net/http"
+	"strings"
 )
 
 const PodmanUnixSocket = "/run/podman/podman.sock"
@@ -69,17 +72,35 @@ func (p *PodmanClient) PullImages(reference string) error {
 		log.Error("Podman pull images error ", err)
 		return err
 	}
+	defer resp.RawBody().Close()
 	reader := bufio.NewReader(resp.RawBody())
 	for {
 		line, err := reader.ReadBytes('\n')
 		if err == io.EOF {
 			break
 		}
-		// TODO parse stream content and print
-		fmt.Println(string(line))
+		var pullImagesResp PullImagesResp
+		err = json.Unmarshal(line, &pullImagesResp)
+		if err != nil {
+			fmt.Println("error", err)
+			return err
+		}
+		if pullImagesResp.Error != "" {
+			err = errors.New(pullImagesResp.Error)
+			fmt.Println("error", err)
+			return err
+		}
+		if pullImagesResp.ID != "" {
+			fmt.Println("ID:", strings.Replace(pullImagesResp.ID, "\n", "", -1))
+		}
+		if len(pullImagesResp.Images) != 0 {
+			for _, image := range pullImagesResp.Images {
+				fmt.Println("Image:", strings.Replace(image, "\n", "", -1))
+			}
+		}
+		if pullImagesResp.Stream != "" {
+			fmt.Println(strings.Replace(pullImagesResp.Stream, "\n", "", -1))
+		}
 	}
-	defer resp.RawBody().Close()
 	return nil
 }
-
-//func (p *PodmanClient) PullImages()
