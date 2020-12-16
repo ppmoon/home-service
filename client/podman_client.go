@@ -7,8 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-resty/resty/v2"
-	"github.com/ppmoon/home-service/log"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"strings"
@@ -45,8 +45,8 @@ func NewPodmanClient() *PodmanClient {
 func (p *PodmanClient) Ping() (pong string, err error) {
 	resp, err := p.R().Get("/libpod/_ping")
 	if err != nil {
-		log.Error("Podman ping error ", err)
-		log.Info("Please check podman.service status.Type  systemctl status podman.socket  in terminal for check.Or Does home-service run in root user?")
+		log.Println("Podman ping error ", err)
+		log.Println("Please check podman.service status.Type  systemctl status podman.socket  in terminal for check.Or Does home-service run in root user?")
 		return
 	}
 	pong = resp.String()
@@ -69,7 +69,7 @@ func (p *PodmanClient) PullImages(reference string) error {
 		SetDoNotParseResponse(true).
 		Post("/libpod/images/pull")
 	if err != nil {
-		log.Error("Podman pull images error ", err)
+		log.Println("Podman pull images error ", err)
 		return err
 	}
 	defer resp.RawBody().Close()
@@ -103,4 +103,24 @@ func (p *PodmanClient) PullImages(reference string) error {
 		}
 	}
 	return nil
+}
+
+type ImageExistsResp struct {
+	Cause    string `json:"cause"`
+	Message  string `json:"message"`
+	Response int    `json:"response"`
+}
+
+// podman image exists
+func (p *PodmanClient) ImageExists(name string) (isExist bool, err error) {
+	resp, err := p.R().Get("/libpod/images/" + name + "/exists")
+	if err != nil {
+		fmt.Println("podman image exists error", err)
+		return
+	}
+	if resp.StatusCode() == http.StatusNoContent {
+		isExist = true
+		return
+	}
+	return
 }

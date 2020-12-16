@@ -5,6 +5,8 @@ import (
 	"testing"
 )
 
+const TestContainerName = "alpine:3.12.2"
+
 func TestPodmanClient_Ping(t *testing.T) {
 	pc := client.NewPodmanClient()
 	pong, err := pc.Ping()
@@ -20,11 +22,23 @@ func TestPodmanClient_Ping(t *testing.T) {
 
 func TestPodmanClient_PullImages(t *testing.T) {
 	pc := client.NewPodmanClient()
-	reference := "docker.io/library/alpine:3.12.2"
+	reference := "docker.io/library/" + TestContainerName
 	err := pc.PullImages(reference)
 	if err != nil {
 		t.Error(err)
 		return
 	}
 	// TODO complete this unit test
+}
+
+func TestPodmanClient_ImageExists(t *testing.T) {
+	pc := client.NewPodmanClient()
+	isExist, err := pc.ImageExists(TestContainerName)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if !isExist {
+		t.Error("podman image exists error.Is Exist ", isExist)
+	}
 }
