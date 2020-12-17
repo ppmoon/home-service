@@ -31,7 +31,6 @@ func NewPodmanClient() *PodmanClient {
 	}
 	// Create a Resty Client
 	client := resty.New()
-
 	// Set the previous transport that we created, set the scheme of the communication to the
 	// socket and set the unixSocket as the HostURL.
 	client.SetTransport(&transport).SetScheme("http").SetHostURL(HostURL)
@@ -111,7 +110,7 @@ type ImageExistsResp struct {
 	Response int    `json:"response"`
 }
 
-// podman image exists
+// Podman image exists
 func (p *PodmanClient) ImageExists(name string) (isExist bool, err error) {
 	resp, err := p.R().Get("/libpod/images/" + name + "/exists")
 	if err != nil {

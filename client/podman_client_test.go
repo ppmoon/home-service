@@ -28,7 +28,6 @@ func TestPodmanClient_PullImages(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	// TODO complete this unit test
 }
 
 func TestPodmanClient_ImageExists(t *testing.T) {

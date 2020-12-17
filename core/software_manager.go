@@ -1,10 +1,25 @@
 package core
 
+import (
+	"github.com/coreos/go-systemd/dbus"
+	"github.com/ppmoon/home-service/client"
+)
+
 type SoftwareManager struct {
+	*dbus.Conn
+	*client.PodmanClient
 }
 
-func NewSoftwareManager() *SoftwareManager {
-	return &SoftwareManager{}
+func NewSoftwareManager() (*SoftwareManager, error) {
+	dbusConn, err := dbus.NewSystemdConnection()
+	if err != nil {
+		return nil, err
+	}
+	podmanClient := client.NewPodmanClient()
+	return &SoftwareManager{
+		dbusConn,
+		podmanClient,
+	}, nil
 }
 
 // Download container image.
@@ -17,3 +32,8 @@ func (s *SoftwareManager) DownloadImage() {
 // install software
 // remove software
 // startup setting
+// Get Home service unit list
+func (s *SoftwareManager) GetUnitList() ([]dbus.UnitStatus, error) {
+	// TODO add home service prefix name for get unit list.Home service just control itself software.
+	return s.ListUnitsByPatterns([]string{}, []string{"podman*"})
+}
