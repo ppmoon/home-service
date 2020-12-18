@@ -5,6 +5,8 @@ import (
 	"github.com/ppmoon/home-service/client"
 )
 
+const HomeServicePrefix = "hs"
+
 type SoftwareManager struct {
 	*dbus.Conn
 	*client.PodmanClient
@@ -34,6 +36,5 @@ func (s *SoftwareManager) DownloadImage() {
 // startup setting
 // Get Home service unit list
 func (s *SoftwareManager) GetUnitList() ([]dbus.UnitStatus, error) {
-	// TODO add home service prefix name for get unit list.Home service just control itself software.
-	return s.ListUnitsByPatterns([]string{}, []string{"podman*"})
+	return s.ListUnitsByPatterns([]string{}, []string{HomeServicePrefix+"*"})
 }
