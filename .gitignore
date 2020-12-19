@@ -95,7 +95,6 @@ Temporary Items
 ### react ###
 .DS_*
 *.log
-logs
 **/*.backup.*
 **/*.back.*
 

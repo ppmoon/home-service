@@ -2,14 +2,14 @@ package core
 
 import (
 	"github.com/coreos/go-systemd/v22/dbus"
-	"github.com/ppmoon/home-service/client"
+	"github.com/ppmoon/home-service/podman"
 )
 
 const HomeServicePrefix = "hs"
 
 type SoftwareManager struct {
 	*dbus.Conn
-	*client.PodmanClient
+	*podman.Client
 }
 
 func NewSoftwareManager() (*SoftwareManager, error) {
@@ -17,7 +17,7 @@ func NewSoftwareManager() (*SoftwareManager, error) {
 	if err != nil {
 		return nil, err
 	}
-	podmanClient := client.NewPodmanClient()
+	podmanClient := podman.NewPodmanClient()
 	return &SoftwareManager{
 		dbusConn,
 		podmanClient,
@@ -36,5 +36,5 @@ func (s *SoftwareManager) DownloadImage() {
 // startup setting
 // Get Home service unit list
 func (s *SoftwareManager) GetUnitList() ([]dbus.UnitStatus, error) {
-	return s.ListUnitsByPatterns([]string{}, []string{HomeServicePrefix+"*"})
+	return s.ListUnitsByPatterns([]string{}, []string{HomeServicePrefix + "*"})
 }
