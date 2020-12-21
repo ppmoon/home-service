@@ -13,8 +13,8 @@ kind: Pod
 metadata:
   creationTimestamp: "2020-12-18T09:38:53Z"
   labels:
-    app: nginx6
-  name: nginx6_pod
+    app: nginx7
+  name: nginx7_pod
 spec:
   containers:
   - command:
@@ -36,7 +36,7 @@ spec:
       value: 1.19.6
     - name: HOSTNAME
     image: docker.io/library/nginx:1.19.6
-    name: nginx6
+    name: nginx7
     resources: {}
     securityContext:
       allowPrivilegeEscalation: true
@@ -57,10 +57,10 @@ spec: {}
 status:
   loadBalancer: {}
 `
-	result, err := pc.PlayK8sYaml(y)
+	// TODO complete unit test
+	err := pc.PlayK8sYaml(y)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	t.Log(result)
 }

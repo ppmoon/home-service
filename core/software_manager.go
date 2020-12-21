@@ -23,7 +23,6 @@ func NewSoftwareManager() (*SoftwareManager, error) {
 		podmanClient,
 	}, nil
 }
-
 // Download container image.
 // Podman pull image
 func (s *SoftwareManager) DownloadImage() {

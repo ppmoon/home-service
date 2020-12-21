@@ -11,6 +11,7 @@ import (
 const UnixSocket = "/run/podman/podman.sock"
 const HostURL = "http://d/v1.0.0"
 
+// Podman Http Client
 type Client struct {
 	*resty.Client
 }
