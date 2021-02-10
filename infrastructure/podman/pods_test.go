@@ -1,7 +1,7 @@
 package podman_test
 
 import (
-	"github.com/ppmoon/home-service/podman"
+	"github.com/ppmoon/home-service/infrastructure/podman"
 	"testing"
 )
 
