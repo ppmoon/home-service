@@ -6,14 +6,14 @@ import (
 )
 
 type SoftwareUseCase struct {
-	*dbus.Conn
-	*podman.Client
+	dbusConn     *dbus.Conn
+	podmanClient *podman.Client
 }
 
-func NewSoftwareUseCase(conn *dbus.Conn, client *podman.Client) *SoftwareUseCase {
+func NewSoftwareUseCase(dbusConn *dbus.Conn, podmanClient *podman.Client) *SoftwareUseCase {
 	return &SoftwareUseCase{
-		Conn:   conn,
-		Client: client,
+		dbusConn:     dbusConn,
+		podmanClient: podmanClient,
 	}
 }
 
