@@ -4,11 +4,12 @@ import (
 	"bufio"
 	"encoding/json"
 	"errors"
-	"github.com/ppmoon/home-service/log"
+	"github.com/ppmoon/home-service/infrastructure/log"
 	"io"
 	"net/http"
 	"strings"
 )
+
 // Podman pull images Response
 type PullImagesResp struct {
 	Error  string   `json:"error"`
@@ -16,6 +17,7 @@ type PullImagesResp struct {
 	Images []string `json:"images"`
 	Stream string   `json:"stream"`
 }
+
 // Podman pull image
 func (c *Client) PullImages(reference string) error {
 	resp, err := c.R().
