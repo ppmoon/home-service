@@ -30,5 +30,14 @@ func (c *Client) Pull(path string) error {
 	if err != nil {
 		return err
 	}
-	return w.Pull(&git.PullOptions{})
+	err = w.Pull(&git.PullOptions{
+		Progress: os.Stdout,
+	})
+	if err != nil {
+		if err == git.NoErrAlreadyUpToDate {
+			return nil
+		}
+		return err
+	}
+	return nil
 }

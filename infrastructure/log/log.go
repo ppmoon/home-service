@@ -10,52 +10,52 @@ func GetZapLoggerSugar() *zap.SugaredLogger {
 }
 
 func Debug(args ...interface{}) {
-	logSugar.Debug(args)
+	logSugar.Debug(args...)
 }
 
 func Info(args ...interface{}) {
-	logSugar.Info(args)
+	logSugar.Info(args...)
 }
 
 func Warn(args ...interface{}) {
-	logSugar.Warn(args)
+	logSugar.Warn(args...)
 }
 
 func Error(args ...interface{}) {
-	logSugar.Error(args)
+	logSugar.Error(args...)
 }
 func DPanic(args ...interface{}) {
-	logSugar.DPanic(args)
+	logSugar.DPanic(args...)
 }
 func Panic(args ...interface{}) {
-	logSugar.Panic(args)
+	logSugar.Panic(args...)
 }
 func Fatal(args ...interface{}) {
-	logSugar.Fatal(args)
+	logSugar.Fatal(args...)
 }
 func Debugf(template string, args ...interface{}) {
-	logSugar.Debugf(template, args)
+	logSugar.Debugf(template, args...)
 }
 
 func Infof(template string, args ...interface{}) {
-	logSugar.Infof(template, args)
+	logSugar.Infof(template, args...)
 }
 
 func Warnf(template string, args ...interface{}) {
-	logSugar.Warnf(template, args)
+	logSugar.Warnf(template, args...)
 }
 
 func Errorf(template string, args ...interface{}) {
-	logSugar.Errorf(template, args)
+	logSugar.Errorf(template, args...)
 }
 
 func DPanicf(template string, args ...interface{}) {
-	logSugar.DPanicf(template, args)
+	logSugar.DPanicf(template, args...)
 }
 
 func Panicf(template string, args ...interface{}) {
-	logSugar.Panicf(template, args)
+	logSugar.Panicf(template, args...)
 }
 func Fatalf(template string, args ...interface{}) {
-	logSugar.Fatalf(template, args)
+	logSugar.Fatalf(template, args...)
 }

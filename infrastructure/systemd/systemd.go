@@ -11,7 +11,6 @@ func NewSystemdClient() (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return &Client{
 		Conn: systemdConnection,
 	}, err

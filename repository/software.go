@@ -4,21 +4,24 @@ import (
 	"github.com/ppmoon/home-service/domain/entity"
 	"github.com/ppmoon/home-service/infrastructure/config"
 	"github.com/ppmoon/home-service/infrastructure/git"
+	"github.com/ppmoon/home-service/infrastructure/log"
 	"os"
 )
 
 type SoftwareRepository struct {
-	git *git.Client
+	git          *git.Client
+	repoRootPath string
 }
 
 const (
 	VersionLatest = "Latest"
-	RepoFolder    = "./repo/"
 )
 
-func NewSoftwareRepository(git *git.Client) *SoftwareRepository {
+func NewSoftwareRepository(repoRootPath string) *SoftwareRepository {
+	g := git.NewGitClient()
 	return &SoftwareRepository{
-		git: git,
+		git:          g,
+		repoRootPath: repoRootPath,
 	}
 }
 
@@ -44,10 +47,12 @@ func (s *SoftwareRepository) Get(name, version, category string) (softwareList [
 func (s *SoftwareRepository) checkSoftwareRepo() error {
 	// read source_list
 	conf := config.GetConfig()
-	for k, v := range conf.SourceList {
-		path := RepoFolder + k
+	log.Infof("conf.SourceList %v", conf.SourceList)
+	for sourceName, sourceGitUrl := range conf.SourceList {
+		path := s.repoRootPath + sourceName
 		var isExist bool
 		isExist = s.isRepoFolderExist(path)
+		log.Infof("check repo folder exist path:%s,result:%t", path, isExist)
 		if isExist {
 			// git pull
 			err := s.git.Pull(path)
@@ -56,7 +61,7 @@ func (s *SoftwareRepository) checkSoftwareRepo() error {
 			}
 		} else {
 			// git clone
-			_, err := s.git.PlainClone(path, v)
+			_, err := s.git.PlainClone(path, sourceGitUrl)
 			if err != nil {
 				return err
 			}

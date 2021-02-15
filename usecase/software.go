@@ -13,12 +13,20 @@ type SoftwareUseCase struct {
 	repo    entity.SoftwareRepository
 }
 
-func NewSoftwareUseCase(systemd *systemd.Client, podmanClient *podman.Client, repo entity.SoftwareRepository) *SoftwareUseCase {
+func NewSoftwareUseCase(repo entity.SoftwareRepository) (*SoftwareUseCase, error) {
+	systemdClient, err := systemd.NewSystemdClient()
+	if err != nil {
+		return nil, err
+	}
+	podmanClient, err := podman.NewPodmanClient()
+	if err != nil {
+		return nil, err
+	}
 	return &SoftwareUseCase{
-		systemd: systemd,
+		systemd: systemdClient,
 		podman:  podmanClient,
 		repo:    repo,
-	}
+	}, nil
 }
 
 // Install software
