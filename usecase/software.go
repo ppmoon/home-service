@@ -1,26 +1,32 @@
 package usecase
 
 import (
-	"github.com/coreos/go-systemd/v22/dbus"
+	"github.com/ppmoon/home-service/domain/entity"
+	"github.com/ppmoon/home-service/domain/valueobject"
 	"github.com/ppmoon/home-service/infrastructure/podman"
+	"github.com/ppmoon/home-service/infrastructure/systemd"
 )
 
 type SoftwareUseCase struct {
-	dbusConn     *dbus.Conn
-	podmanClient *podman.Client
+	systemd *systemd.Client
+	podman  *podman.Client
+	repo    entity.SoftwareRepository
 }
 
-func NewSoftwareUseCase(dbusConn *dbus.Conn, podmanClient *podman.Client) *SoftwareUseCase {
+func NewSoftwareUseCase(systemd *systemd.Client, podmanClient *podman.Client, repo entity.SoftwareRepository) *SoftwareUseCase {
 	return &SoftwareUseCase{
-		dbusConn:     dbusConn,
-		podmanClient: podmanClient,
+		systemd: systemd,
+		podman:  podmanClient,
+		repo:    repo,
 	}
 }
 
 // Install software
-func (s *SoftwareUseCase) Install(name, version string) (err error) {
+func (s *SoftwareUseCase) Install(name, version, category string, environments valueobject.Environments) (err error) {
 	// get software by name and version
+	_, err = s.repo.Get(name, version, category)
+	if err != nil {
+		return
+	}
 	return
 }
-
-// Get software info

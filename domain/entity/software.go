@@ -6,6 +6,7 @@ import "github.com/ppmoon/home-service/domain/valueobject"
 type Software struct {
 	Name         string                   `json:"name"`
 	Version      string                   `json:"version"`
+	Category     string                   `json:"category"`
 	Image        string                   `json:"image"`
 	Ports        valueobject.Ports        `json:"ports"`
 	Volumes      valueobject.Volumes      `json:"volumes"`
@@ -15,10 +16,9 @@ type Software struct {
 
 // Software use case
 type SoftwareUseCase interface {
-	Install(name, version string) (err error)
+	Install(name, version, category string, environments valueobject.Environments) (err error)
 }
 
 type SoftwareRepository interface {
-	GetLastByName(name string) (err error)
-	GetByNameAndVersion(name, version string)
+	Get(name, version, category string) (software []*Software, err error)
 }

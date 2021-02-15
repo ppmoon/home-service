@@ -9,7 +9,7 @@ import (
 var logSugar *zap.SugaredLogger
 var logger *zap.Logger
 
-func init() {
+func Init() {
 	callerSkip := zap.AddCallerSkip(1)
 	caller := zap.AddCaller()
 	encoderConfig := zapcore.EncoderConfig{
