@@ -5,23 +5,29 @@ import (
 	"github.com/ppmoon/home-service/infrastructure/config"
 	"github.com/ppmoon/home-service/infrastructure/git"
 	"github.com/ppmoon/home-service/infrastructure/log"
+	"gopkg.in/yaml.v3"
+	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 type SoftwareRepository struct {
 	git          *git.Client
 	repoRootPath string
+	programPath  string
 }
 
 const (
-	VersionLatest = "Latest"
+	VersionLatest       = "Latest"
+	ConfigParamFileName = "config_param.yaml"
 )
 
-func NewSoftwareRepository(repoRootPath string) *SoftwareRepository {
+func NewSoftwareRepository(repoRootPath, programPath string) *SoftwareRepository {
 	g := git.NewGitClient()
 	return &SoftwareRepository{
 		git:          g,
 		repoRootPath: repoRootPath,
+		programPath:  programPath,
 	}
 }
 
@@ -49,7 +55,7 @@ func (s *SoftwareRepository) checkSoftwareRepo() error {
 	conf := config.GetConfig()
 	log.Infof("conf.SourceList %v", conf.SourceList)
 	for sourceName, sourceGitUrl := range conf.SourceList {
-		path := s.repoRootPath + sourceName
+		path := filepath.Join(s.repoRootPath, sourceName)
 		var isExist bool
 		isExist = s.isRepoFolderExist(path)
 		log.Infof("check repo folder exist path:%s,result:%t", path, isExist)
@@ -80,4 +86,18 @@ func (s *SoftwareRepository) isRepoFolderExist(path string) bool {
 		return false
 	}
 	return true
+}
+
+// Read Repo Config Param
+func (s *SoftwareRepository) ReadConfigParam(sourceName string) (configParam map[string]interface{}, err error) {
+	path := filepath.Join(s.repoRootPath, sourceName, ConfigParamFileName)
+	configParamByte, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	err = yaml.Unmarshal(configParamByte, &configParam)
+	if err != nil {
+		return nil, err
+	}
+	return configParam, err
 }

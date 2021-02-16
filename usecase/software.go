@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"github.com/ppmoon/home-service/domain/entity"
-	"github.com/ppmoon/home-service/domain/valueobject"
 	"github.com/ppmoon/home-service/infrastructure/podman"
 	"github.com/ppmoon/home-service/infrastructure/systemd"
 )
@@ -30,7 +29,7 @@ func NewSoftwareUseCase(repo entity.SoftwareRepository) (*SoftwareUseCase, error
 }
 
 // Install software
-func (s *SoftwareUseCase) Install(name, version, category string, environments valueobject.Environments) (err error) {
+func (s *SoftwareUseCase) Install(name, version, category string) (err error) {
 	// get software by name and version
 	_, err = s.repo.Get(name, version, category)
 	if err != nil {
