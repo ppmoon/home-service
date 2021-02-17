@@ -8,7 +8,7 @@ import (
 func TestSoftwareRepository_Get(t *testing.T) {
 	config.InitConfig("./../config")
 	repo := NewSoftwareRepository("./../repo", "")
-	sList, err := repo.Get("", "", "")
+	sList, err := repo.Get("", "kms", "")
 	if err != nil {
 		t.Error(err)
 		return

@@ -3,6 +3,7 @@ module github.com/ppmoon/home-service
 go 1.16
 
 require (
+	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/containers/podman/v2 v2.2.1
 	github.com/coreos/go-systemd/v22 v22.1.0
 	github.com/go-git/go-git/v5 v5.2.0

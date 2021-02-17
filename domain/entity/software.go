@@ -20,6 +20,7 @@ type SoftwareUseCase interface {
 }
 
 type SoftwareRepository interface {
-	Get(name, version, category string) (software []*Software, err error)
+	Get(category, name, version string) (software *Software, err error)
+	Search(category, name, version string) (software *Software, err error)
 	ReadConfigParam(sourceName string) (configParam map[string]interface{}, err error)
 }
