@@ -6,7 +6,6 @@ import (
 	"github.com/ppmoon/home-service/infrastructure/git"
 	"github.com/ppmoon/home-service/infrastructure/log"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 )
@@ -91,7 +90,7 @@ func (s *SoftwareRepository) isRepoFolderExist(path string) bool {
 // Read Repo Config Param
 func (s *SoftwareRepository) ReadConfigParam(sourceName string) (configParam map[string]interface{}, err error) {
 	path := filepath.Join(s.repoRootPath, sourceName, ConfigParamFileName)
-	configParamByte, err := ioutil.ReadFile(path)
+	configParamByte, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
