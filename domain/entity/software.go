@@ -16,7 +16,7 @@ type Software struct {
 
 // Software use case
 type SoftwareUseCase interface {
-	Install(name, version, category string) (err error)
+	Install(category, name, version string) (err error)
 }
 
 type SoftwareRepository interface {

@@ -29,9 +29,9 @@ func NewSoftwareUseCase(repo entity.SoftwareRepository) (*SoftwareUseCase, error
 }
 
 // Install software
-func (s *SoftwareUseCase) Install(name, version, category string) (err error) {
+func (s *SoftwareUseCase) Install(category, name, version string) (err error) {
 	// get software by name and version
-	_, err = s.repo.Get(name, version, category)
+	_, err = s.repo.Get(category, name, version)
 	if err != nil {
 		return
 	}
