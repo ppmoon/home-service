@@ -7,6 +7,7 @@ import (
 	"github.com/ppmoon/home-service/infrastructure/git"
 	"github.com/ppmoon/home-service/infrastructure/log"
 	"gopkg.in/yaml.v3"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
@@ -56,7 +57,7 @@ func (s *SoftwareRepository) Get(category, name, version string) (software *enti
 
 	// find software
 	softwareFilePath := filepath.Join(s.repoRootPath, category, name, version+YAMLSuffix)
-	softwareFileByte, err := os.ReadFile(softwareFilePath)
+	softwareFileByte, err := ioutil.ReadFile(softwareFilePath)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +71,7 @@ func (s *SoftwareRepository) Get(category, name, version string) (software *enti
 // Get software last version
 func (s *SoftwareRepository) getSoftwareLastVersion(category, name string) (version string, err error) {
 	softwareVersionPath := filepath.Join(s.repoRootPath, category, name)
-	files, err := os.ReadDir(softwareVersionPath)
+	files, err := ioutil.ReadDir(softwareVersionPath)
 	if err != nil {
 		return "", err
 	}
@@ -140,7 +141,7 @@ func (s *SoftwareRepository) isRepoFolderExist(path string) bool {
 // Read Repo Config Param
 func (s *SoftwareRepository) ReadConfigParam(sourceName string) (configParam map[string]interface{}, err error) {
 	path := filepath.Join(s.repoRootPath, sourceName, ConfigParamFileName)
-	configParamByte, err := os.ReadFile(path)
+	configParamByte, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
