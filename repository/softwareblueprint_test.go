@@ -7,7 +7,7 @@ import (
 
 func TestSoftwareRepository_Get(t *testing.T) {
 	config.InitConfig("./../config")
-	repo := NewSoftwareRepository("./../repo", "")
+	repo := NewSoftwareRepository("./../blueprint", "")
 	sList, err := repo.Get("", "kms", "")
 	if err != nil {
 		t.Error(err)
@@ -18,7 +18,7 @@ func TestSoftwareRepository_Get(t *testing.T) {
 
 func TestSoftwareRepository_ReadConfigParam(t *testing.T) {
 	config.InitConfig("./../config")
-	repo := NewSoftwareRepository("./../repo", "./../program")
+	repo := NewSoftwareRepository("./../blueprint", "./../program")
 	cp, err := repo.ReadConfigParam("default_repo")
 	if err != nil {
 		t.Error(err)

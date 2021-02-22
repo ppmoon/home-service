@@ -10,10 +10,10 @@ import (
 type SoftwareUseCase struct {
 	systemd *systemd.Client
 	podman  *podman.Client
-	repo    entity.SoftwareRepository
+	SoftwareBlueprintRepo    entity.SoftwareBlueprintRepository
 }
 
-func NewSoftwareUseCase(repo entity.SoftwareRepository) (*SoftwareUseCase, error) {
+func NewSoftwareUseCase(repo entity.SoftwareBlueprintRepository) (*SoftwareUseCase, error) {
 	systemdClient, err := systemd.NewSystemdClient()
 	if err != nil {
 		return nil, err

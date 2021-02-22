@@ -14,10 +14,9 @@ import (
 	"strings"
 )
 
-type SoftwareRepository struct {
+type SoftwareBlueprintRepository struct {
 	git          *git.Client
 	repoRootPath string
-	softwarePath  string
 }
 
 const (
@@ -26,18 +25,17 @@ const (
 	YAMLSuffix          = ".yaml"
 )
 
-func NewSoftwareRepository(repoRootPath, softwarePath string) *SoftwareRepository {
+func NewSoftwareRepository(repoRootPath string) *SoftwareBlueprintRepository {
 	g := git.NewGitClient()
-	return &SoftwareRepository{
+	return &SoftwareBlueprintRepository{
 		git:          g,
 		repoRootPath: repoRootPath,
-		softwarePath:  softwarePath,
 	}
 }
 
 // Get software by name and version
-func (s *SoftwareRepository) Get(category, name, version string) (software *entity.Software, err error) {
-	// check is exist software repo
+func (s *SoftwareBlueprintRepository) Get(category, name, version string) (software *entity.Software, err error) {
+	// check is exist software blueprint
 	err = s.checkSoftwareRepo()
 	if err != nil {
 		return nil, err
@@ -69,7 +67,7 @@ func (s *SoftwareRepository) Get(category, name, version string) (software *enti
 }
 
 // Get software last version
-func (s *SoftwareRepository) getSoftwareLastVersion(category, name string) (version string, err error) {
+func (s *SoftwareBlueprintRepository) getSoftwareLastVersion(category, name string) (version string, err error) {
 	softwareVersionPath := filepath.Join(s.repoRootPath, category, name)
 	files, err := ioutil.ReadDir(softwareVersionPath)
 	if err != nil {
@@ -97,10 +95,10 @@ func (s *SoftwareRepository) getSoftwareLastVersion(category, name string) (vers
 	return versionFileNameMap[versionList[len(versionList)-1]], nil
 }
 
-// Check software repo.
+// Check software blueprint.
 // If not exist.git clone
 // If exit git pull
-func (s *SoftwareRepository) checkSoftwareRepo() error {
+func (s *SoftwareBlueprintRepository) checkSoftwareRepo() error {
 	// read source_list
 	conf := config.GetConfig()
 	log.Infof("conf.SourceList %v", conf.SourceList)
@@ -108,7 +106,7 @@ func (s *SoftwareRepository) checkSoftwareRepo() error {
 		path := filepath.Join(s.repoRootPath, sourceName)
 		var isExist bool
 		isExist = s.isRepoFolderExist(path)
-		log.Infof("check repo folder exist path:%s,result:%t", path, isExist)
+		log.Infof("check blueprint folder exist path:%s,result:%t", path, isExist)
 		if isExist {
 			// git pull
 			err := s.git.Pull(path)
@@ -126,8 +124,8 @@ func (s *SoftwareRepository) checkSoftwareRepo() error {
 	return nil
 }
 
-// Check repo folder exist
-func (s *SoftwareRepository) isRepoFolderExist(path string) bool {
+// Check blueprint folder exist
+func (s *SoftwareBlueprintRepository) isRepoFolderExist(path string) bool {
 	_, err := os.Stat(path)
 	if err != nil {
 		if os.IsExist(err) {
@@ -139,7 +137,7 @@ func (s *SoftwareRepository) isRepoFolderExist(path string) bool {
 }
 
 // Read Repo Config Param
-func (s *SoftwareRepository) ReadConfigParam(sourceName string) (configParam map[string]interface{}, err error) {
+func (s *SoftwareBlueprintRepository) ReadConfigParam(sourceName string) (configParam map[string]interface{}, err error) {
 	path := filepath.Join(s.repoRootPath, sourceName, ConfigParamFileName)
 	configParamByte, err := ioutil.ReadFile(path)
 	if err != nil {

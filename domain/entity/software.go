@@ -18,8 +18,11 @@ type Software struct {
 type SoftwareUseCase interface {
 	Install(category, name, version string) (err error)
 }
-// Software repository
 type SoftwareRepository interface {
+
+}
+// Software BluePrint repository
+type SoftwareBlueprintRepository interface {
 	Get(category, name, version string) (software *Software, err error)
 	Search(category, name, version string) (software *Software, err error)
 	ReadConfigParam(sourceName string) (configParam map[string]interface{}, err error)
