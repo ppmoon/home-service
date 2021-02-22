@@ -16,7 +16,7 @@ import (
 type SoftwareRepository struct {
 	git          *git.Client
 	repoRootPath string
-	programPath  string
+	softwarePath  string
 }
 
 const (
@@ -25,12 +25,12 @@ const (
 	YAMLSuffix          = ".yaml"
 )
 
-func NewSoftwareRepository(repoRootPath, programPath string) *SoftwareRepository {
+func NewSoftwareRepository(repoRootPath, softwarePath string) *SoftwareRepository {
 	g := git.NewGitClient()
 	return &SoftwareRepository{
 		git:          g,
 		repoRootPath: repoRootPath,
-		programPath:  programPath,
+		softwarePath:  softwarePath,
 	}
 }
 
