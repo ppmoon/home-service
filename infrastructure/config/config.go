@@ -5,7 +5,7 @@ import (
 	"github.com/ppmoon/home-service/domain/entity"
 	"github.com/ppmoon/home-service/infrastructure/log"
 	"github.com/spf13/viper"
-	"os"
+	"io/ioutil"
 )
 
 const YAML = "yaml"
@@ -23,7 +23,7 @@ func InitConfig(path string) {
 func initConfig(path string) {
 	viper.SetConfigType(YAML)
 	viper.AddConfigPath(path)
-	files, err := os.ReadDir(path)
+	files, err := ioutil.ReadDir(path)
 	if err != nil {
 		panic(err)
 	}
