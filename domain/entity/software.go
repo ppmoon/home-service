@@ -15,17 +15,12 @@ type Software struct {
 	Status       string                   `json:"status" yaml:"status"`
 }
 
-// Software service
-type SoftwareService interface {
-	Install(category, name, version string) (err error)
-}
-
 // Software use case
 type SoftwareUseCase interface {
 	Install(category, name, version string) (err error)
 }
 type SoftwareRepository interface {
-	IsSoftwareInstalled()
+	Get(category, name, version string) (softwareList []*Software, err error)
 }
 
 // Software BluePrint repository

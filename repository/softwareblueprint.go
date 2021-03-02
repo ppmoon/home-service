@@ -19,13 +19,7 @@ type SoftwareBlueprintRepository struct {
 	repoRootPath string
 }
 
-const (
-	ConfigParamFileName = "config_param.yaml"
-	DefaultRepo         = "default_repo"
-	YAMLSuffix          = ".yaml"
-)
-
-func NewSoftwareRepository(repoRootPath string) *SoftwareBlueprintRepository {
+func NewSoftwareBlueprintRepository(repoRootPath string) *SoftwareBlueprintRepository {
 	g := git.NewGitClient()
 	return &SoftwareBlueprintRepository{
 		git:          g,

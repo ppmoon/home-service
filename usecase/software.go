@@ -4,13 +4,13 @@ import (
 	"github.com/ppmoon/home-service/domain/entity"
 	"github.com/ppmoon/home-service/infrastructure/podman"
 	"github.com/ppmoon/home-service/infrastructure/systemd"
-	"gopkg.in/yaml.v3"
 )
 
 type SoftwareUseCase struct {
-	systemd *systemd.Client
-	podman  *podman.Client
-	SoftwareBlueprintRepo    entity.SoftwareBlueprintRepository
+	systemd               *systemd.Client
+	podman                *podman.Client
+	SoftwareBlueprintRepo entity.SoftwareBlueprintRepository
+	SoftwareRepo          entity.SoftwareRepository
 }
 
 func NewSoftwareUseCase(repo entity.SoftwareBlueprintRepository) (*SoftwareUseCase, error) {
@@ -23,34 +23,29 @@ func NewSoftwareUseCase(repo entity.SoftwareBlueprintRepository) (*SoftwareUseCa
 		return nil, err
 	}
 	return &SoftwareUseCase{
-		systemd: systemdClient,
-		podman:  podmanClient,
-		repo:    repo,
+		systemd:               systemdClient,
+		podman:                podmanClient,
+		SoftwareBlueprintRepo: repo,
 	}, nil
 }
 
 // Install software
 func (s *SoftwareUseCase) Install(category, name, version string) (err error) {
-	// check run config exist
-	// check software is run
-	// get software by name and version
-	software, err := s.repo.Get(category, name, version)
+	isInstalled, err := s.isSoftwareInstalled(category, name, version)
 	if err != nil {
-		return
+		return err
 	}
-	// create run config
-	// read run config
-	// create container by run config
 	return
 }
-// Create software podman run config file
-func (s *SoftwareUseCase) createRunConfig(software *entity.Software) (err error) {
-	// process environments
-	// save config file to software folder
-	runConfig,err := yaml.Marshal(software)
+
+// Is Software Installed
+func (s *SoftwareUseCase) isSoftwareInstalled(category, name, version string) (isInstalled bool, err error) {
+	software, err := s.SoftwareRepo.Get(category, name, version)
 	if err != nil {
-		return
+		return false, err
 	}
-	s.repo.CreateRunConfigFile(runConfig)
-	return
+	if software != nil {
+		return true, nil
+	}
+	return false, nil
 }
