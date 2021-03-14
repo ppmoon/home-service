@@ -1,18 +1,17 @@
 package entity
 
-import "github.com/ppmoon/home-service/domain/valueobject"
-
 // Software
 type Software struct {
-	Name         string                   `json:"name" yaml:"name"`
-	Version      string                   `json:"version" yaml:"version"`
-	Category     string                   `json:"category" yaml:"category"`
-	Image        string                   `json:"image" yaml:"image"`
-	Ports        valueobject.Ports        `json:"ports" yaml:"ports"`
-	Volumes      valueobject.Volumes      `json:"volumes" yaml:"volumes"`
-	Environments valueobject.Environments `json:"environments" yaml:"environments"`
-	Dependence   []valueobject.Dependence `json:"dependence" yaml:"dependence"`
-	Status       string                   `json:"status" yaml:"status"`
+	Name               string         `json:"name" yaml:"name"`
+	Version            string         `json:"version" yaml:"version"`
+	Category           string         `json:"category" yaml:"category"`
+	Image              string         `json:"image" yaml:"image"`
+	Ports              []Ports        `json:"ports" yaml:"ports"`
+	Volumes            []Volumes      `json:"volumes" yaml:"volumes"`
+	Environments       []Environments `json:"environments" yaml:"environments"`
+	Dependence         []Software     `json:"dependence" yaml:"dependence"`
+	Status             string         `json:"status" yaml:"status"`
+	IsSetStartWithBoot bool           `json:"is_set_start_with_boot" yaml:"is_set_start_with_boot"`
 }
 
 // Software use case

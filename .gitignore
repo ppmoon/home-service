@@ -142,5 +142,4 @@ $RECYCLE.BIN/
 *.lnk
 .vagrant/
 
-blueprint/
-software/
+*.db

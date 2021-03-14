@@ -1,4 +1,4 @@
-package valueobject
+package entity
 
 type Environments []Environment
 

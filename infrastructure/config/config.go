@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ppmoon/home-service/domain/entity"
 	"github.com/ppmoon/home-service/infrastructure/log"
+	"github.com/ppmoon/home-service/infrastructure/sqlite"
 	"github.com/spf13/viper"
 	"io/ioutil"
 )
@@ -17,7 +18,8 @@ func InitConfig(path string) {
 	initConfig(path)
 	// config log
 	log.Init()
-
+	// init db
+	sqlite.InitGorm()
 }
 
 func initConfig(path string) {
