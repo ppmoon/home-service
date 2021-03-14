@@ -9,7 +9,7 @@ type Software struct {
 	Ports              []Ports        `json:"ports" yaml:"ports"`
 	Volumes            []Volumes      `json:"volumes" yaml:"volumes"`
 	Environments       []Environments `json:"environments" yaml:"environments"`
-	Dependence         []Software     `json:"dependence" yaml:"dependence"`
+	Dependence         []Dependence   `json:"dependence" yaml:"dependence"`
 	Status             string         `json:"status" yaml:"status"`
 	IsSetStartWithBoot bool           `json:"is_set_start_with_boot" yaml:"is_set_start_with_boot"`
 }
