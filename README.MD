@@ -9,5 +9,4 @@ Please see doc folder
 
 # Roadmap
 - [ ] Core base features like install,remote,etc.
-- [ ] hscli is a cli tool for manager Home service.
 - [ ] hsui is a gui for manager Home service.
