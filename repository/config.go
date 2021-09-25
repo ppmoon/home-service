@@ -10,7 +10,7 @@ const ConfigBoltBucketName = "config"
 type ConfigRepo struct {
 }
 
-// Read from boltDB sync.Onec
+// Get Read from boltDB sync.Onec
 func (c ConfigRepo) Get() (*entity.Config, error) {
 	panic("")
 }
