@@ -143,3 +143,5 @@ $RECYCLE.BIN/
 .vagrant/
 
 *.db
+
+domain/repository/config.toml

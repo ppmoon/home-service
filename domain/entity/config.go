@@ -1,5 +1,5 @@
 package entity
 
-type Config struct {
+type UserCenterConfig struct {
 	LoginSalt string
 }
