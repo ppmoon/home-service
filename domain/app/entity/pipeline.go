@@ -1,17 +1,17 @@
 package entity
 
 type Pipeline struct {
-	Name     string
-	StepList []PipelineStep
-	Cursor   int
+	name     string
+	stepList []PipelineStep
+	cursor   int
 }
 
 func NewPipeline(name string) *Pipeline {
 	return nil
 }
 
-func (p *Pipeline) AddStep() {
-
+func (p *Pipeline) AddStep(step PipelineStep) {
+	p.stepList = append(p.stepList, step)
 }
 
 func (p *Pipeline) Run() {
