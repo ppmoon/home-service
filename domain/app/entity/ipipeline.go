@@ -1,7 +1,7 @@
 package entity
 
 type IPipeline interface {
-	AddStep()
-	Run()
-	GetProcess()
+	AddStep(step *PipelineStep) error
+	Run() error
+	GetPipelineStatus() *PipelineStatus
 }
