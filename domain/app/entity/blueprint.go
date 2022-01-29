@@ -1,7 +1,5 @@
 package entity
 
-import "github.com/ppmoon/home-service/domain/app/vo"
-
 // Blueprint is software blueprint
 type Blueprint struct {
 	Name         string            `toml:"name"`
@@ -11,5 +9,5 @@ type Blueprint struct {
 	Ports        map[int]int       `toml:"ports"`
 	Environment  map[string]string `toml:"environment"`
 	Command      string            `toml:"command"`
-	Dependencies []vo.Dependence   `toml:"dependencies"`
+	Dependencies []Blueprint       `toml:"dependencies"`
 }

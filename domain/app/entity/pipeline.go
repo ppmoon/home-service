@@ -47,6 +47,7 @@ func (p *Pipeline) Run() error {
 	return nil
 }
 
+// GetPipelineStatus TODO need store to disk for history
 func (p *Pipeline) GetPipelineStatus() *PipelineStatus {
 	return &PipelineStatus{
 		Cursor:         p.cursor,
