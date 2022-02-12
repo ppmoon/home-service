@@ -32,6 +32,7 @@ func (a *AppDomainService) Install(blueprint entity.Blueprint) (err error) {
 	defer a.lock.Unlock(blueprint.Name)
 	// new a pipeline
 	pipeline := entity.NewPipeline(blueprint.Name)
+	// load blueprint to appEngine
 	a.appEngine.LoadBlueprint(blueprint)
 	err = pipeline.AddStep(&entity.PipelineStep{
 		Name: StepNameParseAppBlueprint,
@@ -51,7 +52,7 @@ func (a *AppDomainService) Install(blueprint entity.Blueprint) (err error) {
 			return a.appEngine.RunApp()
 		},
 	})
-	err = pipeline.Run()
+	err = pipeline.Run(time.Second * InstallTimeout)
 	return err
 }
 

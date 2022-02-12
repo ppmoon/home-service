@@ -1,9 +1,6 @@
 package entity
 
 type PipelineStatus struct {
-	Cursor         int
-	Total          int
+	Pipeline
 	RateOfProgress int
-	Status         int
-	RunningStep    *PipelineStep
 }
